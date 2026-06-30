@@ -10,35 +10,35 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card } from '@/components/ui/card'
 
 const services: {
-  icon: LucideIcon
-  title: string
-  description: string
+  icon: LucideIcon;
+  title: string;
+  description: string;
 }[] = [
   {
     icon: Globe,
-    title: 'Websites & landing pages',
+    title: "Websites & landing pages",
     description:
-      'Fast, responsive marketing sites and landing pages built for conversion and SEO.',
+      "Fast, responsive marketing sites and landing pages built for conversion and SEO.",
   },
   {
     icon: Layers,
-    title: 'Web applications',
+    title: "Web applications",
     description:
-      'Full-stack apps with dashboards, auth, APIs, and integrations — built to scale.',
+      "Full-stack apps with dashboards, auth, APIs, and integrations — built to scale.",
   },
   {
     icon: Smartphone,
-    title: 'Mobile apps',
+    title: "Mobile apps",
     description:
-      'iOS and Android experiences with native feel, offline support, and push notifications.',
+      "iOS and Android experiences with native feel, offline support, and push notifications.",
   },
   {
     icon: Cloud,
-    title: 'APIs & infrastructure',
+    title: "APIs & infrastructure",
     description:
-      'Backend services, databases, deployments, and DevOps so your product stays reliable.',
+      "Backend services, databases, analytics (Metabase), deployments, and DevOps to keep your product reliable and scalable.",
   },
-]
+];
 
 export function ServicesSection() {
   return (
