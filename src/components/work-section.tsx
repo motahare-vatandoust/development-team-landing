@@ -1,10 +1,18 @@
 import Image from 'next/image'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowLeftRight, ArrowUpRight } from 'lucide-react'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card } from '@/components/ui/card'
 
-const projects = [
+type Project = {
+  title: string
+  description: string
+  image?: string
+  tags: string[]
+  type: 'Web' | 'Mobile' | 'Backend' | 'Web & Bot'
+}
+
+const projects: Project[] = [
   {
     title: "Inventory Management System (IMS)",
     description:
@@ -41,7 +49,6 @@ const projects = [
     title: "Shima Shoes Middleware",
     description:
       "A backend middleware platform that synchronizes product, inventory, and sales data between Rahkaran, Website and retail sales channels. Handles order processing, calculates product pricing and stock availability, and ensures reliable data consistency across multiple systems and databases.",
-    image: "/assets/images/shima-middleware.png",
     tags: [
       "C#",
       ".NET Framework",
@@ -50,7 +57,7 @@ const projects = [
       "SQL Server",
       "Integration",
     ],
-    type: "Backend" as const,
+    type: "Backend",
   },
   {
     title: "Payroll & HR Management System",
@@ -79,13 +86,22 @@ export function WorkSection() {
             <ScrollReveal key={`${project.title}-${project.type}`} delay={i * 0.08}>
               <Card className="group overflow-hidden border-white/10 bg-black/40 transition-colors hover:border-violet-500/30 hover:bg-black/60">
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                  />
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-violet-950/80 via-zinc-900 to-black">
+                      <ArrowLeftRight
+                        className="size-16 text-violet-400/35 transition-transform duration-500 group-hover:scale-110"
+                        aria-hidden
+                      />
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                   <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-xs text-neutral-200 backdrop-blur-sm">
                     {project.type}
