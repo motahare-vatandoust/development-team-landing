@@ -6,38 +6,61 @@ import { Card } from '@/components/ui/card'
 
 const projects = [
   {
-    title: 'SaaS Dashboard',
-    category: 'Web app',
-    description: 'Analytics platform with real-time data, auth, and role-based access.',
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-    tags: ['Next.js', 'TypeScript', 'PostgreSQL'],
+    title: "Inventory Management System (IMS)",
+    description:
+      "An enterprise inventory solution developed to streamline stock tracking, product management, and day-to-day warehouse operations. Features interactive dashboards, role-based permissions, powerful data visualization, and real-time inventory monitoring for improved operational control.",
+    image: "/assets/images/ims-web.png",
+    tags: ["React", "TypeScript", "C#", "Redux", "PostgreSQL", "Figma"],
+    type: "Web" as const,
   },
   {
-    title: 'E-commerce Store',
-    category: 'Website',
-    description: 'Custom storefront with payments, inventory sync, and admin panel.',
-    image:
-      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React', 'Stripe', 'Tailwind'],
+    title: "Inventory Management System (IMS) — Mobile",
+    description:
+      "A cross-platform mobile application built for warehouse staff to simplify inventory management. Supports barcode scanning, order picking, stock updates, and reliable API integration using scalable state management architecture.",
+    image: "/assets/images/ims-app.png",
+    tags: ["Flutter", "Dart", "BLoC", "Cubit", "REST API"],
+    type: "Mobile" as const,
   },
   {
-    title: 'Fitness Mobile App',
-    category: 'Mobile',
-    description: 'Cross-platform app with workouts, progress tracking, and push notifications.',
-    image:
-      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80',
-    tags: ['React Native', 'Firebase', 'API'],
+    title: "Internal Workflow & Approval System",
+    description:
+      "A business process automation platform that digitizes internal requests, including leave applications, expense approvals, and administrative workflows. Provides configurable forms, approval pipelines, and permission-based access to improve efficiency and transparency.",
+    image: "/assets/images/automation.png",
+    tags: ["React", "TypeScript", "C#", "RBAC", "Workflow", "Admin Panel"],
+    type: "Web" as const,
   },
   {
-    title: 'Agency Landing',
-    category: 'Website',
-    description: 'High-converting marketing site with CMS, animations, and SEO optimization.',
-    image:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-    tags: ['Next.js', 'Framer Motion', 'CMS'],
+    title: "Distribution Management Platform",
+    description:
+      "A web platform created to manage product distribution and order allocation across business operations. Includes advanced filtering, searchable data grids, and intuitive navigation to help users organize and monitor large volumes of information efficiently.",
+    image: "/assets/images/distribution.png",
+    tags: ["React", "TypeScript", "C#", "Zustand", "Figma"],
+    type: "Web" as const,
   },
-]
+  {
+    title: "Shima Shoes Middleware",
+    description:
+      "A backend middleware platform that synchronizes product, inventory, and sales data between Rahkaran, Website and retail sales channels. Handles order processing, calculates product pricing and stock availability, and ensures reliable data consistency across multiple systems and databases.",
+    image: "/assets/images/shima-middleware.png",
+    tags: [
+      "C#",
+      ".NET Framework",
+      "PostgreSQL",
+      "MariaDB",
+      "SQL Server",
+      "Integration",
+    ],
+    type: "Backend" as const,
+  },
+  {
+    title: "Payroll & HR Management System",
+    description:
+      "A web-based payroll and HR platform that automates employee salary calculations, generates digital payslips, and streamlines payroll operations. Integrated with Rahkaran ERP and a Bale chatbot, allowing employees to securely access their payslips and payroll information directly through the messaging platform.",
+    image: "/assets/images/payroll-system.png",
+    tags: ["React", "TypeScript", "C#", "PostgreSQL", "Bot"],
+    type: "Web & Bot" as const,
+  },
+];
 
 export function WorkSection() {
   return (
@@ -53,7 +76,7 @@ export function WorkSection() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {projects.map((project, i) => (
-            <ScrollReveal key={project.title} delay={i * 0.08}>
+            <ScrollReveal key={`${project.title}-${project.type}`} delay={i * 0.08}>
               <Card className="group overflow-hidden border-white/10 bg-black/40 transition-colors hover:border-violet-500/30 hover:bg-black/60">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -65,7 +88,7 @@ export function WorkSection() {
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                   <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-xs text-neutral-200 backdrop-blur-sm">
-                    {project.category}
+                    {project.type}
                   </span>
                 </div>
 
