@@ -49,6 +49,8 @@ const projects: Project[] = [
     title: "Shima Shoes Middleware",
     description:
       "A backend middleware platform that synchronizes product, inventory, and sales data between Rahkaran, Website and retail sales channels. Handles order processing, calculates product pricing and stock availability, and ensures reliable data consistency across multiple systems and databases.",
+    image:
+      "/assets/images/shima-middleware.png",
     tags: [
       "C#",
       ".NET Framework",
