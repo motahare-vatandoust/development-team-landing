@@ -123,11 +123,9 @@ export function Hero() {
           initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative w-full max-w-lg shrink-0 self-center lg:max-w-none lg:flex-1 lg:self-auto"
+          className="relative w-full max-w-lg shrink-0 flex-1 self-center lg:max-w-none lg:self-stretch"
         >
-          <div className="relative w-full min-h-[300px] sm:min-h-[440px] lg:h-full lg:min-h-[500px]">
-            <HeroVisual />
-          </div>
+          <HeroVisual />
         </motion.div>
       </div>
     </section>
