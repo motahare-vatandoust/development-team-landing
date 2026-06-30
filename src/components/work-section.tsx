@@ -81,11 +81,15 @@ export function WorkSection() {
           />
         </ScrollReveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 [&>*]:h-full">
           {projects.map((project, i) => (
-            <ScrollReveal key={`${project.title}-${project.type}`} delay={i * 0.08}>
-              <Card className="group overflow-hidden border-white/10 bg-black/40 transition-colors hover:border-violet-500/30 hover:bg-black/60">
-                <div className="relative aspect-[16/10] overflow-hidden">
+            <ScrollReveal
+              key={`${project.title}-${project.type}`}
+              delay={i * 0.08}
+              className="h-full"
+            >
+              <Card className="group flex h-full flex-col overflow-hidden border-white/10 bg-black/40 transition-colors hover:border-violet-500/30 hover:bg-black/60">
+                <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
                   {project.image ? (
                     <Image
                       src={project.image}
@@ -109,12 +113,12 @@ export function WorkSection() {
                   </span>
                 </div>
 
-                <div className="p-6">
+                <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="text-lg font-semibold text-white">{project.title}</h3>
                     <ArrowUpRight className="size-5 shrink-0 text-neutral-500 transition-colors group-hover:text-violet-400" />
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-400">
                     {project.description}
                   </p>
                   <ul className="mt-4 flex flex-wrap gap-2">
