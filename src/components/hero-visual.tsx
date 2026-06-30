@@ -104,7 +104,7 @@ function BrowserMockup({
   isHovered: boolean
 }) {
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative mx-auto w-full max-w-none sm:max-w-md">
       <div className="overflow-hidden rounded-xl border border-white/10 bg-neutral-950/90 shadow-2xl shadow-black/50 backdrop-blur-sm transition-[border-color,box-shadow] duration-300 hover:border-violet-500/30 hover:shadow-violet-500/10">
         <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2.5">
           <div className="flex gap-1.5">
@@ -131,14 +131,14 @@ function BrowserMockup({
           </motion.div>
         </div>
 
-        <div className="border-b border-white/5 bg-neutral-900/80 px-3 py-2">
-          <div className="flex gap-1 text-[10px] sm:text-xs">
+        <div className="border-b border-white/5 bg-neutral-900/80 px-2 py-1.5 sm:px-3 sm:py-2">
+          <div className="flex gap-0.5 sm:gap-1">
             {fileTabs.map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => onTabChange(tab)}
-                className={`relative cursor-pointer rounded px-2 py-1 transition-colors ${
+                className={`relative flex-1 cursor-pointer touch-manipulation rounded px-1 py-2.5 text-[10px] transition-colors sm:flex-none sm:px-2 sm:py-1 sm:text-xs ${
                   activeTab === tab
                     ? 'text-neutral-100'
                     : 'text-neutral-500 hover:text-neutral-300'
@@ -182,7 +182,7 @@ function BrowserMockup({
             : '0 0 0px rgba(52,211,153,0)',
         }}
         transition={{ y: { duration: 3, repeat: Infinity, ease: 'easeInOut' } }}
-        className="absolute -right-3 -top-3 flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-300 sm:-right-4 sm:px-3 sm:text-xs"
+        className="absolute -right-1 -top-2 hidden items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium text-emerald-300 sm:flex sm:-right-4 sm:-top-3 sm:px-3 sm:text-xs"
       >
         <motion.span
           animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
@@ -203,7 +203,7 @@ function PhoneMockup({
   onLaunch: () => void
 }) {
   return (
-    <div className="relative mx-auto w-[140px] sm:w-[160px] lg:mx-0">
+    <div className="relative mx-auto w-[120px] sm:w-[160px] lg:mx-0">
       <motion.div
         whileHover={{ scale: 1.03 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -274,7 +274,7 @@ function PhoneMockup({
                   onClick={onLaunch}
                   whileHover={{ scale: 1.04, backgroundColor: '#e4e4e7' }}
                   whileTap={{ scale: 0.96 }}
-                  className="mt-2 flex h-7 w-full cursor-pointer items-center justify-center gap-1 rounded-lg bg-white text-[10px] font-semibold text-black"
+                  className="mt-2 flex h-9 w-full touch-manipulation cursor-pointer items-center justify-center gap-1 rounded-lg bg-white text-[11px] font-semibold text-black sm:h-7 sm:text-[10px]"
                 >
                   <Rocket className="size-3" aria-hidden />
                   Launch
@@ -288,7 +288,7 @@ function PhoneMockup({
       <motion.div
         animate={{ x: [0, 3, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -left-2 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-black/80 px-2 py-1 text-[10px] text-neutral-300 sm:-left-6"
+        className="absolute -left-1 top-1/2 hidden -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-black/80 px-1.5 py-0.5 text-[9px] text-neutral-300 sm:flex sm:-left-6 sm:px-2 sm:py-1 sm:text-[10px]"
       >
         <Smartphone className="size-3 text-sky-400" aria-hidden />
         iOS &amp; Android
@@ -430,7 +430,7 @@ export function HeroVisual() {
       onMouseMove={handlePointerMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handlePointerLeave}
-      className="relative flex h-full w-full items-center justify-center"
+      className="relative flex h-full w-full items-center justify-center overflow-hidden px-1 sm:px-0 sm:pb-10 lg:pb-12"
     >
       <div
         aria-hidden
@@ -451,13 +451,13 @@ export function HeroVisual() {
             ? undefined
             : { rotateX, rotateY, transformPerspective: 1200 }
         }
-        className="relative flex w-full flex-col items-center gap-6 sm:gap-8 lg:flex-row lg:items-end lg:justify-center lg:gap-10"
+        className="relative flex w-full flex-row items-end justify-center gap-3 sm:max-w-none sm:flex-col sm:items-center sm:gap-8 lg:flex-row lg:items-end lg:justify-center lg:gap-10"
       >
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.1 }}
-          className="relative w-full max-w-md lg:max-w-none lg:flex-1"
+          className="relative min-w-0 flex-1 sm:w-full sm:max-w-md lg:max-w-none lg:flex-1"
         >
           <BrowserMockup
             activeTab={activeTab}
@@ -468,7 +468,7 @@ export function HeroVisual() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="absolute -bottom-2 left-4 w-[calc(100%-2rem)] sm:-bottom-4 lg:-bottom-6 lg:left-0 lg:w-auto"
+            className="mt-3 hidden w-full sm:absolute sm:-bottom-4 sm:left-4 sm:mt-0 sm:block sm:w-[calc(100%-2rem)] lg:-bottom-6 lg:left-0 lg:w-auto"
           >
             <TerminalCard buildPhase={buildPhase} visibleSteps={visibleSteps} />
           </motion.div>
@@ -478,12 +478,13 @@ export function HeroVisual() {
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.25 }}
+          className="shrink-0"
         >
           <PhoneMockup phoneState={phoneState} onLaunch={handleLaunch} />
         </motion.div>
       </motion.div>
 
-      <p className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-neutral-600 sm:bottom-0">
+      <p className="absolute bottom-0 left-1/2 hidden -translate-x-1/2 text-[10px] text-neutral-600 sm:block">
         Try the tabs &amp; Launch button
       </p>
     </div>

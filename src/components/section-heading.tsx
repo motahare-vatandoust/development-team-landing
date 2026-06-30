@@ -26,7 +26,7 @@ export function SectionHeading({
       <p className="text-sm font-medium uppercase tracking-[0.2em] text-violet-400">
         {label}
       </p>
-      <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      <h2 className="mt-3 text-2xl font-bold tracking-tight text-white text-balance sm:text-3xl lg:text-4xl">
         {title}
       </h2>
       {description && (

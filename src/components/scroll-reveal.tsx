@@ -19,7 +19,7 @@ export function ScrollReveal({ children, className, delay = 0 }: ScrollRevealPro
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-      className={cn(className)}
+      className={cn(className?.includes('h-full') && 'flex h-full flex-col', className)}
     >
       {children}
     </motion.div>

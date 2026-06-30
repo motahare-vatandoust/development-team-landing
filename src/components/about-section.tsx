@@ -11,16 +11,16 @@ const stats = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="border-t border-white/5 bg-black py-20 sm:py-28">
+    <section id="about" className="border-t border-white/5 bg-black py-16 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <ScrollReveal>
             <SectionHeading
               label="About us"
               title="Independent team, enterprise impact"
               description="We are an independent, agile software team specializing in digital transformation, enterprise systems, and intelligent process automation. We design and operate the technology infrastructure for large organizations — including Shima Shoes."
             />
-            <p className="mt-6 text-sm leading-relaxed text-neutral-400 sm:text-base">
+            <p className="mt-5 text-sm leading-relaxed text-neutral-400 sm:mt-6 sm:text-base">
               Our core strength lies in analyzing complex industrial requirements,
               building integrated management systems (ERP, CRM, SCM), and delivering
               modern B2B and B2C platforms. We turn manual, fragmented workflows into
@@ -32,15 +32,17 @@ export function AboutSection() {
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 [&>*]:h-full">
             {stats.map((stat, i) => (
-              <ScrollReveal key={stat.label} delay={i * 0.08}>
-                <div className="rounded-xl border border-white/10 bg-white/2 p-5 transition-colors hover:border-violet-500/25 sm:p-6">
-                  <stat.icon className="size-5 text-violet-400" aria-hidden />
-                  <p className="mt-4 text-2xl font-bold text-white sm:text-3xl">
+              <ScrollReveal key={stat.label} delay={i * 0.08} className="h-full">
+                <div className="flex h-full min-h-[9rem] flex-col rounded-xl border border-white/10 bg-white/2 p-3 transition-colors hover:border-violet-500/25 sm:min-h-[10rem] sm:p-5 lg:p-6">
+                  <stat.icon className="size-4 shrink-0 text-violet-400 sm:size-5" aria-hidden />
+                  <p className="mt-2 text-lg font-bold tracking-tight text-white sm:mt-4 sm:text-2xl lg:text-3xl">
                     {stat.value}
                   </p>
-                  <p className="mt-1 text-sm text-neutral-400">{stat.label}</p>
+                  <p className="mt-auto pt-1.5 text-[11px] leading-snug text-neutral-400 sm:pt-2 sm:text-sm">
+                    {stat.label}
+                  </p>
                 </div>
               </ScrollReveal>
             ))}
