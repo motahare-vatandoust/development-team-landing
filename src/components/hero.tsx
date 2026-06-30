@@ -43,18 +43,37 @@ export function Hero() {
             Developers who ship
           </motion.p>
 
-          <motion.h1
-            custom={0.1}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="text-[1.75rem] font-bold leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl"
-          >
-            <span className="bg-linear-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent">
-              We build websites &amp; apps
-            </span>
-            <br />
-            <span className="text-white">from zero.</span>
+          <motion.h1 className="text-balance text-[1.875rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.05]">
+            <motion.span
+              custom={0.1}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="block"
+            >
+              <span className="font-medium text-neutral-500">We build </span>
+              <span className="bg-linear-to-r from-white via-neutral-100 to-neutral-400 bg-clip-text text-transparent">
+                websites &amp; apps
+              </span>
+            </motion.span>
+            <motion.span
+              custom={0.22}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="mt-2 block sm:mt-3"
+            >
+              <span className="font-medium text-neutral-500">from </span>
+              <span className="relative inline-block">
+                <span className="bg-linear-to-r from-violet-300 via-sky-200 to-emerald-300 bg-clip-text text-transparent">
+                  zero.
+                </span>
+                <span
+                  aria-hidden
+                  className="absolute -bottom-1 left-0 h-px w-full bg-linear-to-r from-violet-500/60 via-sky-400/40 to-emerald-400/60"
+                />
+              </span>
+            </motion.span>
           </motion.h1>
 
           <motion.p
