@@ -1,12 +1,12 @@
-import { Code2, Rocket, Users, Zap } from 'lucide-react'
+import { Building2, Globe, Layers, Workflow } from 'lucide-react'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
 
 const stats = [
-  { icon: Rocket, value: '50+', label: 'Projects shipped' },
-  { icon: Users, value: '30+', label: 'Happy clients' },
-  { icon: Code2, value: '5+', label: 'Years building' },
-  { icon: Zap, value: '2wk', label: 'Avg. MVP timeline' },
+  { icon: Building2, value: '10+', label: 'Enterprise systems delivered' },
+  { icon: Layers, value: 'ERP', label: 'CRM, SCM & unified management' },
+  { icon: Globe, value: 'B2B/B2C', label: 'Commerce & org platforms' },
+  { icon: Workflow, value: 'End-to-end', label: 'From requirements to production' },
 ]
 
 export function AboutSection() {
@@ -17,13 +17,18 @@ export function AboutSection() {
           <ScrollReveal>
             <SectionHeading
               label="About us"
-              title="A small team with big output"
-              description="We're developers who care about craft — clean architecture, polished UI, and products that actually work in production. No agency bloat, just people who write code and ship."
+              title="Independent team, enterprise impact"
+              description="We are an independent, agile software team specializing in digital transformation, enterprise systems, and intelligent process automation. We design and operate the technology infrastructure for large organizations — including Shima Shoes."
             />
             <p className="mt-6 text-sm leading-relaxed text-neutral-400 sm:text-base">
-              Whether you need a landing page this week or a full platform over
-              several months, we adapt to your pace. We work async-friendly across
-              time zones and keep communication clear.
+              Our core strength lies in analyzing complex industrial requirements,
+              building integrated management systems (ERP, CRM, SCM), and delivering
+              modern B2B and B2C platforms. We turn manual, fragmented workflows into
+              unified, data-driven software that boosts productivity and accelerates
+              decision-making. As a strategic technology partner, we create and
+              support the architecture and digital tools businesses need to grow,
+              scale, and enter new markets — from first design through long-term
+              delivery.
             </p>
           </ScrollReveal>
 
