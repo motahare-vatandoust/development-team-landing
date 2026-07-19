@@ -11,7 +11,7 @@ export const fa: Dictionary = {
   },
   common: {
     brand: 'ویلو استودیو',
-    getInTouch: 'گفت‌وگو کنید',
+    getInTouch: 'ارتباط با ما',
     openMenu: 'باز کردن منو',
     closeMenu: 'بستن منو',
     primaryNav: 'منوی اصلی',
