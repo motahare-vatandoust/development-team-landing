@@ -5,6 +5,7 @@ import { Hero } from '@/components/hero'
 import { ProcessSection } from '@/components/process-section'
 import { ServicesSection } from '@/components/services-section'
 import { SiteHeader } from '@/components/site-header'
+import { TeamSection } from '@/components/team-section'
 import { WorkSection } from '@/components/work-section'
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
         <ServicesSection />
         <ProcessSection />
         <AboutSection />
+        <TeamSection />
         <ContactSection />
         <Footer />
       </main>

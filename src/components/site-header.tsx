@@ -10,6 +10,7 @@ const navLinks = [
   { href: '#services', label: 'Services' },
   { href: '#process', label: 'Process' },
   { href: '#about', label: 'About' },
+  { href: '#team', label: 'Team' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -60,7 +61,7 @@ export function SiteHeader() {
       <div
         className={cn(
           'overflow-hidden border-t border-white/5 bg-black/95 md:hidden',
-          open ? 'max-h-80' : 'max-h-0'
+          open ? 'max-h-96' : 'max-h-0'
         )}
       >
         <nav className="flex flex-col gap-1 px-4 py-4">
