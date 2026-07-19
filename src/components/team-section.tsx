@@ -1,25 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
-
-type TeamMember = {
-  name: string
-  role: string
-  bio: string
-  image: string
-  links?: {
-    github?: string
-    linkedin?: string
-  }
-}
-
-function GithubIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.79-1.335-1.79-1.09-.744.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  )
-}
+import { useDictionary } from '@/i18n/dictionary-provider'
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -29,60 +13,23 @@ function LinkedinIcon({ className }: { className?: string }) {
   )
 }
 
-/** Edit this list to add or update team members. */
-const members: TeamMember[] = [
-  {
-    name: 'Amirhossein Izadjoo',
-    role: 'Technical Team Lead & DevOps',
-    bio: 'Leads the technical team and oversees DevOps — from architecture and delivery standards to reliable production infrastructure.',
-    image: '/assets/images/izad.jpg',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/amirhosein-izadjou-8526a81a4/',
-    },
-  },
-  {
-    name: 'Helia Tari',
-    role: 'Frontend & Mobile Engineer',
-    bio: 'Builds frontend and mobile experiences — from UI implementation to cross-platform apps shipped to production.',
-    image: '/assets/images/helia.jpg',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/helia-yaghoubpour-tari/',
-    },
-  },
-  {
-    name: 'Motahare Vatandoust',
-    role: 'Frontend & UI Engineer',
-    bio: 'Focuses on frontend and UI — polished interfaces, design systems, and user-facing web experiences.',
-    image: '/assets/images/motahare.JPG',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/motahare-vatandoust/',
-    },
-  },
-  {
-    name: 'Soheyl Sayyah',
-    role: 'Backend Engineer & Product Manager',
-    bio: 'Works across backend systems and product direction — APIs, data, requirements, and the foundation that keeps products reliable.',
-    image: '/assets/images/soheyl.jpg',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/soheylsayyah/',
-    },
-  },
-]
-
 export function TeamSection() {
+  const { dictionary } = useDictionary()
+  const { team } = dictionary
+
   return (
     <section id="team" className="border-t border-white/5 bg-zinc-950 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <ScrollReveal>
           <SectionHeading
-            label="Team"
-            title="The people behind the work"
-            description="A small, senior team — close collaboration, clear ownership, and production focus."
+            label={team.label}
+            title={team.title}
+            description={team.description}
           />
         </ScrollReveal>
 
         <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:mt-14 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-8 [&>*]:min-w-0">
-          {members.map((member, i) => (
+          {team.members.map((member, i) => (
             <li key={member.name} className="group flex h-full min-w-0 flex-col">
               <ScrollReveal delay={i * 0.08} className="flex h-full flex-col">
                 <div className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-zinc-900 transition-colors group-hover:border-violet-500/30 sm:aspect-4/5 sm:max-h-72 sm:rounded-2xl">
@@ -105,30 +52,17 @@ export function TeamSection() {
                     {member.bio}
                   </p>
 
-                  {(member.links?.github || member.links?.linkedin) && (
+                  {member.linkedin && (
                     <div className="mt-3 flex items-center gap-3 sm:mt-4">
-                      {member.links.github && (
-                        <a
-                          href={member.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-neutral-500 transition-colors hover:text-white"
-                          aria-label={`${member.name} on GitHub`}
-                        >
-                          <GithubIcon className="size-4" />
-                        </a>
-                      )}
-                      {member.links.linkedin && (
-                        <a
-                          href={member.links.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-neutral-500 transition-colors hover:text-white"
-                          aria-label={`${member.name} on LinkedIn`}
-                        >
-                          <LinkedinIcon className="size-4" />
-                        </a>
-                      )}
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-neutral-500 transition-colors hover:text-white"
+                        aria-label={team.onLinkedin.replace('{name}', member.name)}
+                      >
+                        <LinkedinIcon className="size-4" />
+                      </a>
                     </div>
                   )}
                 </div>

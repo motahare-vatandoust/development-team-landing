@@ -12,9 +12,6 @@ import { WorkSection } from '@/components/work-section'
 export default function Home() {
   return (
     <>
-      <a href="#main" className="skip-link">
-        Skip to content
-      </a>
       <SiteHeader />
       <main id="main" className="flex flex-1 flex-col bg-black text-white">
         <Hero />

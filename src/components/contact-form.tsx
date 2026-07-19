@@ -9,26 +9,22 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { ArrowRight, Check, CheckCircle2, ChevronDown, Loader2 } from 'lucide-react'
+import { useDictionary } from '@/i18n/dictionary-provider'
 import { cn } from '@/lib/utils'
 
 const CONTACT_EMAIL = 'velostudio24@gmail.com'
 
-const projectTypes = [
-  'Website / landing page',
-  'Web app',
-  'Mobile app',
-  'Backend / API',
-  'Something else',
-] as const
-
-type ProjectType = (typeof projectTypes)[number]
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export function ContactForm() {
+  const { dictionary } = useDictionary()
+  const formCopy = dictionary.form
+  const projectTypes = formCopy.projectTypes
+
   const formId = useId()
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [projectType, setProjectType] = useState<ProjectType | ''>('')
+  const [projectType, setProjectType] = useState<string>('')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -41,27 +37,28 @@ export function ContactForm() {
     const message = String(data.get('message') ?? '').trim()
 
     if (!name || !email || !message) {
-      setError('Please fill in your name, email, and a short message.')
+      setError(formCopy.errorRequired)
       setStatus('error')
       return
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
+      setError(formCopy.errorEmail)
       setStatus('error')
       return
     }
 
     setStatus('sending')
 
+    const typePart = projectType ? ` — ${projectType}` : ''
     const subject = encodeURIComponent(
-      `Project inquiry${projectType ? ` — ${projectType}` : ''} from ${name}`
+      formCopy.mailSubject.replace('{type}', typePart).replace('{name}', name)
     )
     const body = encodeURIComponent(
       [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        projectType ? `Project type: ${projectType}` : null,
+        `${formCopy.mailName}: ${name}`,
+        `${formCopy.mailEmail}: ${email}`,
+        projectType ? `${formCopy.mailProjectType}: ${projectType}` : null,
         '',
         message,
       ]
@@ -86,12 +83,13 @@ export function ContactForm() {
       >
         <CheckCircle2 className="size-6 text-emerald-400" aria-hidden />
         <div>
-          <p className="text-base font-semibold text-white">Draft ready in your mail app</p>
+          <p className="text-base font-semibold text-white">{formCopy.sentTitle}</p>
           <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">
-            If nothing opened, email us directly at{' '}
+            {formCopy.sentBody}{' '}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-neutral-200 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+              dir="ltr"
             >
               {CONTACT_EMAIL}
             </a>
@@ -103,7 +101,7 @@ export function ContactForm() {
           onClick={() => setStatus('idle')}
           className="mt-2 text-sm text-neutral-400 transition-colors hover:text-white"
         >
-          Send another message
+          {formCopy.sendAnother}
         </button>
       </div>
     )
@@ -114,20 +112,21 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           id={`${formId}-name`}
-          label="Name"
+          label={formCopy.name}
           name="name"
           autoComplete="name"
-          placeholder="Your name"
+          placeholder={formCopy.namePlaceholder}
           required
         />
         <Field
           id={`${formId}-email`}
-          label="Email"
+          label={formCopy.email}
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="you@company.com"
+          placeholder={formCopy.emailPlaceholder}
           required
+          dir="ltr"
         />
       </div>
 
@@ -135,6 +134,9 @@ export function ContactForm() {
         id={`${formId}-type`}
         value={projectType}
         onChange={setProjectType}
+        options={[...projectTypes]}
+        label={formCopy.projectType}
+        placeholder={formCopy.selectOne}
       />
 
       <div>
@@ -142,14 +144,14 @@ export function ContactForm() {
           htmlFor={`${formId}-message`}
           className="mb-2 block text-sm font-medium text-neutral-300"
         >
-          Message
+          {formCopy.message}
         </label>
         <textarea
           id={`${formId}-message`}
           name="message"
           rows={5}
           required
-          placeholder="What are you building? Timeline, goals, or anything else we should know."
+          placeholder={formCopy.messagePlaceholder}
           className={cn(
             'w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white',
             'transition-colors placeholder:text-neutral-600',
@@ -165,9 +167,7 @@ export function ContactForm() {
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-neutral-500">
-          Opens your email app with a prefilled message. We usually reply within 24 hours.
-        </p>
+        <p className="text-xs text-neutral-500">{formCopy.hint}</p>
         <button
           type="submit"
           disabled={status === 'sending'}
@@ -179,12 +179,12 @@ export function ContactForm() {
           {status === 'sending' ? (
             <>
               <Loader2 className="size-3 animate-spin" aria-hidden />
-              Opening…
+              {formCopy.opening}
             </>
           ) : (
             <>
-              Send message
-              <ArrowRight className="size-3" aria-hidden />
+              {formCopy.send}
+              <ArrowRight className="size-3 rtl:rotate-180" aria-hidden />
             </>
           )}
         </button>
@@ -197,10 +197,16 @@ function ProjectTypeSelect({
   id,
   value,
   onChange,
+  options,
+  label,
+  placeholder,
 }: {
   id: string
-  value: ProjectType | ''
-  onChange: (value: ProjectType | '') => void
+  value: string
+  onChange: (value: string) => void
+  options: string[]
+  label: string
+  placeholder: string
 }) {
   const [open, setOpen] = useState(false)
   const [highlight, setHighlight] = useState(0)
@@ -222,11 +228,11 @@ function ProjectTypeSelect({
 
   useEffect(() => {
     if (!open) return
-    const index = value ? projectTypes.indexOf(value) : 0
+    const index = value ? options.indexOf(value) : 0
     setHighlight(index >= 0 ? index : 0)
-  }, [open, value])
+  }, [open, value, options])
 
-  function select(option: ProjectType) {
+  function select(option: string) {
     onChange(option)
     setOpen(false)
   }
@@ -247,19 +253,19 @@ function ProjectTypeSelect({
 
     if (event.key === 'ArrowDown') {
       event.preventDefault()
-      setHighlight((i) => (i + 1) % projectTypes.length)
+      setHighlight((i) => (i + 1) % options.length)
       return
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault()
-      setHighlight((i) => (i - 1 + projectTypes.length) % projectTypes.length)
+      setHighlight((i) => (i - 1 + options.length) % options.length)
       return
     }
 
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      select(projectTypes[highlight])
+      select(options[highlight])
       return
     }
 
@@ -271,14 +277,14 @@ function ProjectTypeSelect({
 
     if (event.key === 'End') {
       event.preventDefault()
-      setHighlight(projectTypes.length - 1)
+      setHighlight(options.length - 1)
     }
   }
 
   return (
     <div ref={rootRef} className="relative">
       <label htmlFor={id} className="mb-2 block text-sm font-medium text-neutral-300">
-        Project type
+        {label}
       </label>
 
       <button
@@ -290,12 +296,12 @@ function ProjectTypeSelect({
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onTriggerKeyDown}
         className={cn(
-          'flex w-full items-center justify-between gap-3 rounded-xl border bg-white/5 px-4 py-3 text-left text-sm transition-colors',
+          'flex w-full items-center justify-between gap-3 rounded-xl border bg-white/5 px-4 py-3 text-start text-sm transition-colors',
           open ? 'border-violet-500/40' : 'border-white/10 hover:border-white/20',
           value ? 'text-white' : 'text-neutral-600'
         )}
       >
-        <span className="truncate">{value || 'Select one'}</span>
+        <span className="truncate">{value || placeholder}</span>
         <ChevronDown
           className={cn(
             'size-4 shrink-0 text-neutral-400 transition-transform duration-200',
@@ -316,7 +322,7 @@ function ProjectTypeSelect({
           ref={(node) => node?.focus()}
           className="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-xl border border-white/10 bg-zinc-950/95 p-1.5 shadow-xl shadow-black/40 backdrop-blur-md"
         >
-          {projectTypes.map((option, index) => {
+          {options.map((option, index) => {
             const selected = value === option
             const active = highlight === index
             return (
@@ -352,6 +358,7 @@ function Field({
   placeholder,
   autoComplete,
   required,
+  dir,
 }: {
   id: string
   label: string
@@ -360,6 +367,7 @@ function Field({
   placeholder?: string
   autoComplete?: string
   required?: boolean
+  dir?: 'ltr' | 'rtl'
 }) {
   return (
     <div>
@@ -373,6 +381,7 @@ function Field({
         autoComplete={autoComplete}
         placeholder={placeholder}
         required={required}
+        dir={dir}
         className={cn(
           'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white',
           'transition-colors placeholder:text-neutral-600',

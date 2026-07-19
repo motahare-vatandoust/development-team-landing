@@ -26,9 +26,13 @@ html {
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), var(--font-vazirmatn);
   --font-mono: var(--font-geist-mono);
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+html[lang='fa'] {
+  --font-sans: var(--font-vazirmatn), var(--font-geist-sans);
 }
 
 @keyframes spotlight {
@@ -91,26 +95,6 @@ textarea:focus-visible,
 select:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px #09090b, 0 0 0 4px var(--ring);
-}
-
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -100%;
-  z-index: 100;
-  border-radius: 9999px;
-  background: #fff;
-  padding: 0.625rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #000;
-  transition: top 0.15s ease;
-}
-
-.skip-link:focus {
-  top: 1rem;
-  outline: 2px solid var(--ring);
-  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {

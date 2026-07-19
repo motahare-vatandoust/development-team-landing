@@ -3,10 +3,12 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
+import { useDictionary } from '@/i18n/dictionary-provider'
 import { cn } from '@/lib/utils'
 
 /** Compact CTA that appears after the hero on small screens. */
 export function MobileCtaBar() {
+  const { dictionary } = useDictionary()
   const [pastHero, setPastHero] = useState(false)
   const [onContact, setOnContact] = useState(false)
 
@@ -52,8 +54,8 @@ export function MobileCtaBar() {
         tabIndex={visible ? 0 : -1}
         className="flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-black"
       >
-        Start a project
-        <ArrowRight className="size-4" aria-hidden />
+        {dictionary.mobileCta.startProject}
+        <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
       </Link>
     </div>
   )

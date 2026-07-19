@@ -1,24 +1,34 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-
-const footerLinks = [
-  { href: '#work', label: 'Work' },
-  { href: '#services', label: 'Services' },
-  { href: '#process', label: 'Process' },
-  { href: '#about', label: 'About' },
-  { href: '#team', label: 'Team' },
-  { href: '#contact', label: 'Contact' },
-]
+import { useMemo } from 'react'
+import { useDictionary } from '@/i18n/dictionary-provider'
 
 const CONTACT_EMAIL = 'velostudio24@gmail.com'
 
 export function Footer() {
+  const { locale, dictionary } = useDictionary()
+  const { common, nav, footer } = dictionary
+
+  const footerLinks = useMemo(
+    () => [
+      { href: '#work', label: nav.work },
+      { href: '#services', label: nav.services },
+      { href: '#process', label: nav.process },
+      { href: '#about', label: nav.about },
+      { href: '#team', label: nav.team },
+      { href: '#contact', label: nav.contact },
+    ],
+    [nav]
+  )
+
   return (
     <footer className="border-t border-white/5 bg-black py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
-            <Link href="#" className="flex items-center gap-3">
+            <Link href={`/${locale}`} className="flex items-center gap-3">
               <Image
                 src="/assets/images/logo.png"
                 alt=""
@@ -27,14 +37,17 @@ export function Footer() {
                 unoptimized
                 className="size-7 rounded-md"
               />
-              <span className="text-sm font-medium text-neutral-300">Velo Studio</span>
+              <span className="text-sm font-medium text-neutral-300">{common.brand}</span>
             </Link>
-            <p className="text-sm text-neutral-500 sm:border-l sm:border-white/10 sm:pl-4">
-              © {new Date().getFullYear()} All rights reserved.
+            <p className="text-sm text-neutral-500 sm:border-s sm:border-white/10 sm:ps-4">
+              © {new Date().getFullYear()} {footer.rights}
             </p>
           </div>
 
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label="Footer">
+          <nav
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2"
+            aria-label={common.footerNav}
+          >
             {footerLinks.map((link) => (
               <Link
                 key={link.href}
@@ -51,12 +64,11 @@ export function Footer() {
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="text-sm text-neutral-500 transition-colors hover:text-neutral-300"
+            dir="ltr"
           >
             {CONTACT_EMAIL}
           </a>
-          <p className="text-xs text-neutral-600">
-            Websites, apps &amp; systems — built from zero.
-          </p>
+          <p className="text-xs text-neutral-600">{footer.tagline}</p>
         </div>
       </div>
     </footer>

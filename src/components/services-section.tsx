@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Cloud,
   Globe,
@@ -8,66 +10,49 @@ import {
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card } from '@/components/ui/card'
+import { useDictionary } from '@/i18n/dictionary-provider'
 
-const services: {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-}[] = [
-  {
-    icon: Globe,
-    title: "Websites & landing pages",
-    description:
-      "Fast, responsive marketing sites and landing pages built for conversion and SEO.",
-  },
-  {
-    icon: Layers,
-    title: "Web applications",
-    description:
-      "Full-stack apps with dashboards, auth, APIs, and integrations — built to scale.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile apps",
-    description:
-      "iOS and Android experiences with native feel, offline support, and push notifications.",
-  },
-  {
-    icon: Cloud,
-    title: "APIs & infrastructure",
-    description:
-      "Backend services, databases, analytics (Metabase), deployments, and DevOps to keep your product reliable and scalable.",
-  },
-];
+const icons: Record<string, LucideIcon> = {
+  websites: Globe,
+  webapps: Layers,
+  mobile: Smartphone,
+  infra: Cloud,
+}
 
 export function ServicesSection() {
+  const { dictionary } = useDictionary()
+  const { services } = dictionary
+
   return (
     <section id="services" className="border-t border-white/5 bg-black py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <ScrollReveal>
           <SectionHeading
-            label="Services"
-            title="What we build"
-            description="We cover the full stack — design implementation, frontend, backend, and deployment."
+            label={services.label}
+            title={services.title}
+            description={services.description}
           />
         </ScrollReveal>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => (
-            <ScrollReveal key={service.title} delay={i * 0.08}>
-              <Card className="h-full border-white/10 bg-white/2 p-6 transition-colors hover:border-violet-500/25 hover:bg-white/4">
-                <div className="flex size-10 items-center justify-center rounded-lg border border-violet-500/20 bg-violet-500/10">
-                  <service.icon className="size-5 text-violet-400" aria-hidden />
-                </div>
-                <h3 className="mt-5 text-base font-semibold text-white">
-                  {service.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-                  {service.description}
-                </p>
-              </Card>
-            </ScrollReveal>
-          ))}
+          {services.items.map((service, i) => {
+            const Icon = icons[service.id] ?? Globe
+            return (
+              <ScrollReveal key={service.id} delay={i * 0.08}>
+                <Card className="h-full border-white/10 bg-white/2 p-6 transition-colors hover:border-violet-500/25 hover:bg-white/4">
+                  <div className="flex size-10 items-center justify-center rounded-lg border border-violet-500/20 bg-violet-500/10">
+                    <Icon className="size-5 text-violet-400" aria-hidden />
+                  </div>
+                  <h3 className="mt-5 text-base font-semibold text-white">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                    {service.description}
+                  </p>
+                </Card>
+              </ScrollReveal>
+            )
+          })}
         </div>
       </div>
     </section>

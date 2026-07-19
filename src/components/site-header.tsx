@@ -2,22 +2,33 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import { useDictionary } from '@/i18n/dictionary-provider'
 import { cn } from '@/lib/utils'
 
-const navLinks = [
-  { href: '#work', label: 'Work' },
-  { href: '#services', label: 'Services' },
-  { href: '#process', label: 'Process' },
-  { href: '#about', label: 'About' },
-  { href: '#team', label: 'Team' },
-  { href: '#contact', label: 'Contact' },
-]
-
-const sectionIds = navLinks.map((link) => link.href.slice(1))
-
 export function SiteHeader() {
+  const { locale, dictionary } = useDictionary()
+  const { common, nav } = dictionary
+
+  const navLinks = useMemo(
+    () => [
+      { href: '#work', label: nav.work },
+      { href: '#services', label: nav.services },
+      { href: '#process', label: nav.process },
+      { href: '#about', label: nav.about },
+      { href: '#team', label: nav.team },
+      { href: '#contact', label: nav.contact },
+    ],
+    [nav]
+  )
+
+  const sectionIds = useMemo(
+    () => navLinks.map((link) => link.href.slice(1)),
+    [navLinks]
+  )
+
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string>('')
   const menuId = useId()
@@ -47,7 +58,7 @@ export function SiteHeader() {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [sectionIds])
 
   useEffect(() => {
     if (!open) return
@@ -60,7 +71,6 @@ export function SiteHeader() {
     }
 
     document.addEventListener('keydown', onKeyDown)
-    // Defer focus so the panel is in the DOM and visible.
     const frame = window.requestAnimationFrame(() => {
       firstLinkRef.current?.focus()
     })
@@ -84,7 +94,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-white/5 bg-black/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
         <Link
-          href="#"
+          href={`/${locale}`}
           className="flex items-center gap-2.5 text-sm font-semibold tracking-wide text-neutral-200 sm:text-base"
           onClick={() => setOpen(false)}
         >
@@ -97,10 +107,13 @@ export function SiteHeader() {
             className="size-8 rounded-lg"
             priority
           />
-          Velo Studio
+          {common.brand}
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav
+          className="hidden items-center gap-8 md:flex"
+          aria-label={common.primaryNav}
+        >
           {navLinks.map((link) => {
             const isActive = active === link.href.slice(1)
             return (
@@ -121,12 +134,14 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageSwitcher locale={locale} label={common.language} />
+
           <Link
             href="#contact"
             className="hidden rounded-full border border-white/15 px-4 py-2 text-sm text-neutral-200 transition-colors hover:border-white/30 hover:bg-white/5 sm:inline-flex"
           >
-            Get in touch
+            {common.getInTouch}
           </Link>
 
           <button
@@ -134,7 +149,7 @@ export function SiteHeader() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             className="inline-flex rounded-lg border border-white/10 p-2 text-neutral-300 transition-colors hover:bg-white/5 md:hidden"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? common.closeMenu : common.openMenu}
             aria-expanded={open}
             aria-controls={menuId}
           >
@@ -152,7 +167,7 @@ export function SiteHeader() {
         aria-hidden={!open}
         inert={open ? undefined : true}
       >
-        <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile">
+        <nav className="flex flex-col gap-1 px-4 py-4" aria-label={common.mobileNav}>
           {navLinks.map((link, index) => {
             const isActive = active === link.href.slice(1)
             return (
@@ -176,7 +191,7 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
             className="mt-2 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
           >
-            Get in touch
+            {common.getInTouch}
           </Link>
         </nav>
       </div>

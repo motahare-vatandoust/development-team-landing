@@ -1,46 +1,53 @@
+'use client'
+
 import { Clock, Mail, MessageSquare } from 'lucide-react'
 import { ContactForm } from '@/components/contact-form'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { useDictionary } from '@/i18n/dictionary-provider'
 
 const CONTACT_EMAIL = 'velostudio24@gmail.com'
 
-const details = [
-  {
-    icon: Mail,
-    label: 'Email',
-    content: (
-      <a
-        href={`mailto:${CONTACT_EMAIL}`}
-        className="text-neutral-200 transition-colors hover:text-white"
-      >
-        {CONTACT_EMAIL}
-      </a>
-    ),
-  },
-  {
-    icon: Clock,
-    label: 'Response time',
-    content: <span className="text-neutral-300">Usually within 24 hours</span>,
-  },
-  {
-    icon: MessageSquare,
-    label: 'Availability',
-    content: (
-      <span className="text-neutral-300">Freelance &amp; contract work</span>
-    ),
-  },
-]
-
 export function ContactSection() {
+  const { dictionary } = useDictionary()
+  const { contact } = dictionary
+
+  const details = [
+    {
+      icon: Mail,
+      label: contact.emailLabel,
+      content: (
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="text-neutral-200 transition-colors hover:text-white"
+          dir="ltr"
+        >
+          {CONTACT_EMAIL}
+        </a>
+      ),
+    },
+    {
+      icon: Clock,
+      label: contact.responseLabel,
+      content: <span className="text-neutral-300">{contact.responseValue}</span>,
+    },
+    {
+      icon: MessageSquare,
+      label: contact.availabilityLabel,
+      content: (
+        <span className="text-neutral-300">{contact.availabilityValue}</span>
+      ),
+    },
+  ]
+
   return (
     <section id="contact" className="border-t border-white/5 bg-zinc-950 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <ScrollReveal>
           <SectionHeading
-            label="Contact"
-            title="Let's build something"
-            description="Tell us about your project — we'll get back within 24 hours with next steps."
+            label={contact.label}
+            title={contact.title}
+            description={contact.description}
           />
         </ScrollReveal>
 
@@ -63,8 +70,7 @@ export function ContactSection() {
             </ul>
 
             <p className="mt-8 max-w-sm text-sm leading-relaxed text-neutral-500">
-              Prefer a quick chat? Email us with a one-liner about what you need
-              and we&apos;ll suggest the best next step.
+              {contact.preferChat}
             </p>
           </ScrollReveal>
 

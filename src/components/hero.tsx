@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { HeroVisual } from '@/components/hero-visual'
 import { Spotlight } from '@/components/ui/spotlight'
+import { useDictionary } from '@/i18n/dictionary-provider'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -18,17 +19,18 @@ const fadeUp = {
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion()
+  const { dictionary } = useDictionary()
+  const { hero } = dictionary
 
   return (
     <section className="relative w-full overflow-x-hidden bg-black text-white">
       <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20"
+        className="-top-40 start-0 md:start-60 md:-top-20"
         fill="white"
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-12 pt-8 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-10 lg:min-h-[calc(100dvh-4rem)] lg:flex-row lg:items-center lg:gap-12 lg:px-10 lg:pb-20 lg:pt-12">
         <div className="flex flex-1 flex-col justify-center lg:max-w-xl xl:max-w-2xl">
-
           <motion.h1 className="text-balance text-[1.875rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.05]">
             <motion.span
               custom={0.1}
@@ -37,9 +39,9 @@ export function Hero() {
               animate="visible"
               className="block"
             >
-              <span className="font-medium text-neutral-500">We build </span>
+              <span className="font-medium text-neutral-500">{hero.line1Muted}</span>
               <span className="bg-linear-to-r from-white via-neutral-100 to-neutral-400 bg-clip-text text-transparent">
-                websites &amp; apps
+                {hero.line1Accent}
               </span>
             </motion.span>
             <motion.span
@@ -49,14 +51,14 @@ export function Hero() {
               animate="visible"
               className="mt-2 block sm:mt-3"
             >
-              <span className="font-medium text-neutral-500">from </span>
+              <span className="font-medium text-neutral-500">{hero.line2Muted}</span>
               <span className="relative inline-block">
                 <span className="bg-linear-to-r from-violet-300 via-sky-200 to-emerald-300 bg-clip-text text-transparent">
-                  zero.
+                  {hero.line2Accent}
                 </span>
                 <span
                   aria-hidden
-                  className="absolute -bottom-1 left-0 h-px w-full bg-linear-to-r from-violet-500/60 via-sky-400/40 to-emerald-400/60"
+                  className="absolute -bottom-1 start-0 h-px w-full bg-linear-to-r from-violet-500/60 via-sky-400/40 to-emerald-400/60"
                 />
               </span>
             </motion.span>
@@ -69,8 +71,7 @@ export function Hero() {
             animate="visible"
             className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-300 sm:mt-6 sm:text-base lg:text-lg"
           >
-            Landing pages, web apps, mobile experiences, and the systems behind
-            them — designed, built, and shipped as production-ready products.
+            {hero.description}
           </motion.p>
 
           <motion.div
@@ -89,8 +90,8 @@ export function Hero() {
                 href="#contact"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 sm:w-auto"
               >
-                Start a project
-                <ArrowRight className="size-4" aria-hidden />
+                {hero.ctaPrimary}
+                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
               </Link>
             </motion.div>
             <motion.div
@@ -102,7 +103,7 @@ export function Hero() {
                 href="#work"
                 className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-neutral-200 transition-colors hover:border-white/30 hover:bg-white/5 sm:w-auto"
               >
-                See what we build
+                {hero.ctaSecondary}
               </Link>
             </motion.div>
           </motion.div>
