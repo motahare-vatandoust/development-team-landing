@@ -32,7 +32,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 /** Edit this list to add or update team members. */
 const members: TeamMember[] = [
   {
-    name: 'Helia Tary',
+    name: 'Helia Tari',
     role: 'Software Engineer',
     bio: 'Builds and ships product interfaces, from design systems to production-ready web apps.',
     image: '/assets/images/helia.jpg',
@@ -81,30 +81,32 @@ export function TeamSection() {
           />
         </ScrollReveal>
 
-        <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:mt-14 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-8 [&>*]:min-w-0">
           {members.map((member, i) => (
-            <ScrollReveal key={member.name} delay={i * 0.08}>
-              <li className="group flex h-full flex-col">
-                <div className="relative aspect-4/5 max-h-72 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 transition-colors group-hover:border-violet-500/30">
+            <li key={member.name} className="group flex h-full min-w-0 flex-col">
+              <ScrollReveal delay={i * 0.08} className="flex h-full flex-col">
+                <div className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-zinc-900 transition-colors group-hover:border-violet-500/30 sm:aspect-4/5 sm:max-h-72 sm:rounded-2xl">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     unoptimized
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105 sm:object-top"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
 
-                <div className="mt-5 flex flex-1 flex-col">
-                  <h3 className="text-lg font-semibold text-white">{member.name}</h3>
-                  <p className="mt-1 text-sm font-medium text-violet-400">{member.role}</p>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-400">
+                <div className="mt-3 flex flex-1 flex-col sm:mt-5">
+                  <h3 className="text-base font-semibold text-white sm:text-lg">{member.name}</h3>
+                  <p className="mt-0.5 text-xs font-medium text-violet-400 sm:mt-1 sm:text-sm">
+                    {member.role}
+                  </p>
+                  <p className="mt-2 flex-1 text-xs leading-relaxed text-neutral-400 sm:mt-3 sm:text-sm">
                     {member.bio}
                   </p>
 
                   {(member.links?.github || member.links?.linkedin) && (
-                    <div className="mt-4 flex items-center gap-3">
+                    <div className="mt-3 flex items-center gap-3 sm:mt-4">
                       {member.links.github && (
                         <a
                           href={member.links.github}
@@ -130,8 +132,8 @@ export function TeamSection() {
                     </div>
                   )}
                 </div>
-              </li>
-            </ScrollReveal>
+              </ScrollReveal>
+            </li>
           ))}
         </ul>
       </div>
