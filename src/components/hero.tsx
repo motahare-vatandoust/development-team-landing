@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Code2, Globe, Smartphone } from 'lucide-react'
@@ -33,15 +34,26 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-12 pt-8 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-10 lg:min-h-[calc(100dvh-4rem)] lg:flex-row lg:items-center lg:gap-12 lg:px-10 lg:pb-20 lg:pt-12">
         <div className="flex flex-1 flex-col justify-center lg:max-w-xl xl:max-w-2xl">
-          <motion.p
+          <motion.div
             custom={0}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mb-3 text-sm font-semibold tracking-wide text-white sm:mb-4 sm:text-base"
+            className="mb-3 flex items-center gap-3 sm:mb-4"
           >
-            Velo Studio
-          </motion.p>
+            <Image
+              src="/assets/images/logo.png"
+              alt=""
+              width={40}
+              height={40}
+              unoptimized
+              className="size-9 rounded-xl sm:size-10"
+              priority
+            />
+            <p className="text-base font-semibold tracking-wide text-white sm:text-lg">
+              Velo Studio
+            </p>
+          </motion.div>
 
           <motion.h1 className="text-balance text-[1.875rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.05]">
             <motion.span

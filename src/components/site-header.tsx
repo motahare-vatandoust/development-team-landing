@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
@@ -22,8 +23,17 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
         <Link
           href="#"
-          className="text-sm font-semibold tracking-wide text-neutral-200 sm:text-base"
+          className="flex items-center gap-2.5 text-sm font-semibold tracking-wide text-neutral-200 sm:text-base"
         >
+          <Image
+            src="/assets/images/logo.png"
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            className="size-8 rounded-lg"
+            priority
+          />
           Velo Studio
         </Link>
 

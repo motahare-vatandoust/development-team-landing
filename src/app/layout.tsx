@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "Velo Studio — We build websites & apps from zero",
   description:
     "Velo Studio designs, builds, and ships websites and mobile apps from the ground up.",
+  icons: {
+    icon: "/assets/images/logo.png",
+    apple: "/assets/images/logo.png",
+  },
 };
 
 export default function RootLayout({

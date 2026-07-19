@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 const footerLinks = [
@@ -13,9 +14,19 @@ export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-black py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-10">
-        <p className="text-sm text-neutral-500">
-          © {new Date().getFullYear()} Velo Studio. All rights reserved.
-        </p>
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+          <Image
+            src="/assets/images/logo.png"
+            alt=""
+            width={28}
+            height={28}
+            unoptimized
+            className="size-7 rounded-md"
+          />
+          <p className="text-sm text-neutral-500">
+            © {new Date().getFullYear()} Velo Studio. All rights reserved.
+          </p>
+        </div>
 
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
           {footerLinks.map((link) => (
