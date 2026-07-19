@@ -41,7 +41,7 @@ const members: TeamMember[] = [
     },
   },
   {
-    name: 'Helia Tary',
+    name: 'Helia Tari',
     role: 'Frontend & Mobile Engineer',
     bio: 'Builds frontend and mobile experiences — from UI implementation to cross-platform apps shipped to production.',
     image: '/assets/images/helia.jpg',
