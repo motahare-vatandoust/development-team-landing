@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -15,8 +15,70 @@ const navLinks = [
   { href: '#contact', label: 'Contact' },
 ]
 
+const sectionIds = navLinks.map((link) => link.href.slice(1))
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState<string>('')
+  const menuId = useId()
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+        if (visible[0]?.target.id) {
+          setActive(visible[0].target.id)
+        }
+      },
+      {
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: [0, 0.25, 0.5, 0.75],
+      }
+    )
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    // Defer focus so the panel is in the DOM and visible.
+    const frame = window.requestAnimationFrame(() => {
+      firstLinkRef.current?.focus()
+    })
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      window.cancelAnimationFrame(frame)
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [open])
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-black/80 backdrop-blur-md">
@@ -24,6 +86,7 @@ export function SiteHeader() {
         <Link
           href="#"
           className="flex items-center gap-2.5 text-sm font-semibold tracking-wide text-neutral-200 sm:text-base"
+          onClick={() => setOpen(false)}
         >
           <Image
             src="/assets/images/logo.png"
@@ -37,16 +100,25 @@ export function SiteHeader() {
           Velo Studio
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm text-neutral-400 transition-colors hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+          {navLinks.map((link) => {
+            const isActive = active === link.href.slice(1)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? 'true' : undefined}
+                className={cn(
+                  'text-sm transition-colors',
+                  isActive
+                    ? 'text-white'
+                    : 'text-neutral-400 hover:text-white'
+                )}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -58,37 +130,51 @@ export function SiteHeader() {
           </Link>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex rounded-lg border border-white/10 p-2 text-neutral-300 md:hidden"
+            className="inline-flex rounded-lg border border-white/10 p-2 text-neutral-300 transition-colors hover:bg-white/5 md:hidden"
             aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls={menuId}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
         </div>
       </div>
 
       <div
+        id={menuId}
         className={cn(
-          'overflow-hidden border-t border-white/5 bg-black/95 md:hidden',
+          'overflow-hidden border-t border-white/5 bg-black/95 transition-[max-height] duration-300 ease-out md:hidden',
           open ? 'max-h-96' : 'max-h-0'
         )}
+        aria-hidden={!open}
+        inert={open ? undefined : true}
       >
-        <nav className="flex flex-col gap-1 px-4 py-4">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm text-neutral-300 transition-colors hover:bg-white/5 hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile">
+          {navLinks.map((link, index) => {
+            const isActive = active === link.href.slice(1)
+            return (
+              <Link
+                key={link.href}
+                ref={index === 0 ? firstLinkRef : undefined}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                aria-current={isActive ? 'true' : undefined}
+                className={cn(
+                  'rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-white/5',
+                  isActive ? 'bg-white/5 text-white' : 'text-neutral-300 hover:text-white'
+                )}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
           <Link
             href="#contact"
             onClick={() => setOpen(false)}
-            className="mt-2 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-black"
+            className="mt-2 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
           >
             Get in touch
           </Link>

@@ -3,15 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Code2, Globe, Smartphone } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { HeroVisual } from '@/components/hero-visual'
 import { Spotlight } from '@/components/ui/spotlight'
-
-const capabilities = [
-  { icon: Globe, label: 'Websites' },
-  { icon: Smartphone, label: 'Mobile apps' },
-  { icon: Code2, label: 'From zero' },
-]
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -89,48 +83,28 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            custom={0.2}
+            custom={0.32}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-300 sm:mt-6 sm:text-base lg:text-lg"
           >
-            We&apos;re Velo Studio — we turn ideas into production-ready
-            products: landing pages, web apps, mobile experiences, and
-            everything in between.
+            Landing pages, web apps, mobile experiences, and the systems behind
+            them — designed, built, and shipped as production-ready products.
           </motion.p>
 
-          <motion.ul
-            initial="hidden"
-            animate="visible"
-            className="mt-6 flex flex-wrap gap-2 sm:mt-8 sm:gap-3"
-          >
-            {capabilities.map(({ icon: Icon, label }, i) => (
-              <motion.li
-                key={label}
-                custom={0.3 + i * 0.08}
-                variants={fadeUp}
-                whileHover={
-                  prefersReducedMotion
-                    ? undefined
-                    : { scale: 1.05, borderColor: 'rgba(255,255,255,0.25)' }
-                }
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-neutral-300 transition-colors hover:bg-white/10 sm:px-3 sm:py-1.5 sm:text-sm"
-              >
-                <Icon className="size-4 text-neutral-400" aria-hidden />
-                {label}
-              </motion.li>
-            ))}
-          </motion.ul>
-
           <motion.div
-            custom={0.45}
+            custom={0.42}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center"
           >
-            <motion.div className="w-full sm:w-auto" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+            <motion.div
+              className="w-full sm:w-auto"
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
+            >
               <Link
                 href="#contact"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200 sm:w-auto"
@@ -139,7 +113,11 @@ export function Hero() {
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
             </motion.div>
-            <motion.div className="w-full sm:w-auto" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+            <motion.div
+              className="w-full sm:w-auto"
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
+            >
               <Link
                 href="#work"
                 className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-neutral-200 transition-colors hover:border-white/30 hover:bg-white/5 sm:w-auto"

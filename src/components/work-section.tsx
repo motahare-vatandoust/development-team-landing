@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ArrowLeftRight, ArrowUpRight } from 'lucide-react'
+import { ArrowLeftRight } from 'lucide-react'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { Card } from '@/components/ui/card'
@@ -116,10 +116,7 @@ export function WorkSection() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-lg font-semibold text-white">{project.title}</h3>
-                    <ArrowUpRight className="size-5 shrink-0 text-neutral-500 transition-colors group-hover:text-violet-400" />
-                  </div>
+                  <h3 className="text-lg font-semibold text-white">{project.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-400">
                     {project.description}
                   </p>

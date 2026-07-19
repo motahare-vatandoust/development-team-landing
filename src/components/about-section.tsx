@@ -17,18 +17,15 @@ export function AboutSection() {
           <ScrollReveal>
             <SectionHeading
               label="About us"
-              title="Independent team, enterprise impact"
-              description="We are an independent, agile software team specializing in digital transformation, enterprise systems, and intelligent process automation. We design and operate the technology infrastructure for large organizations — including Shima Shoes."
+              title="Independent team, production impact"
+              description="We are an independent software team that ships websites, apps, and enterprise systems — from first idea to long-term delivery. We design and operate technology for growing organizations, including Shima Shoes."
             />
             <p className="mt-5 text-sm leading-relaxed text-neutral-400 sm:mt-6 sm:text-base">
-              Our core strength lies in analyzing complex industrial requirements,
-              building integrated management systems (ERP, CRM, SCM), and delivering
-              modern B2B and B2C platforms. We turn manual, fragmented workflows into
-              unified, data-driven software that boosts productivity and accelerates
-              decision-making. As a strategic technology partner, we create and
-              support the architecture and digital tools businesses need to grow,
-              scale, and enter new markets — from first design through long-term
-              delivery.
+              Our strength is turning complex requirements into integrated products:
+              management systems (ERP, CRM, SCM), B2B and B2C platforms, and the
+              automation that connects them. We replace fragmented workflows with
+              unified, data-driven software — and stay on as a technology partner
+              from architecture through production support.
             </p>
           </ScrollReveal>
 

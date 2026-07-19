@@ -2,6 +2,7 @@ import { AboutSection } from '@/components/about-section'
 import { ContactSection } from '@/components/contact-section'
 import { Footer } from '@/components/footer'
 import { Hero } from '@/components/hero'
+import { MobileCtaBar } from '@/components/mobile-cta-bar'
 import { ProcessSection } from '@/components/process-section'
 import { ServicesSection } from '@/components/services-section'
 import { SiteHeader } from '@/components/site-header'
@@ -11,8 +12,11 @@ import { WorkSection } from '@/components/work-section'
 export default function Home() {
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <SiteHeader />
-      <main className="flex flex-col bg-black text-white">
+      <main id="main" className="flex flex-1 flex-col bg-black text-white">
         <Hero />
         <WorkSection />
         <ServicesSection />
@@ -20,8 +24,9 @@ export default function Home() {
         <AboutSection />
         <TeamSection />
         <ContactSection />
-        <Footer />
       </main>
+      <Footer />
+      <MobileCtaBar />
     </>
   )
 }
