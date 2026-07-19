@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { SectionHeading } from '@/components/section-heading'
 import { ScrollReveal } from '@/components/scroll-reveal'
 
@@ -5,7 +6,7 @@ type TeamMember = {
   name: string
   role: string
   bio: string
-  initials: string
+  image: string
   links?: {
     github?: string
     linkedin?: string
@@ -34,40 +35,36 @@ const members: TeamMember[] = [
     name: 'Helia Tary',
     role: 'Software Engineer',
     bio: 'Builds and ships product interfaces, from design systems to production-ready web apps.',
-    initials: 'HT',
+    image: '/assets/images/helia.jpg',
     links: {
-      // github: 'https://github.com/...',
-      // linkedin: 'https://linkedin.com/in/...',
+      linkedin: 'https://www.linkedin.com/in/helia-yaghoubpour-tari/',
     },
   },
   {
     name: 'Moti Vatandoust',
     role: 'Software Engineer',
     bio: 'Focuses on full-stack delivery — APIs, data, and reliable systems that scale with the business.',
-    initials: 'MV',
+    image: '/assets/images/motahare.JPG',
     links: {
-      // github: 'https://github.com/...',
-      // linkedin: 'https://linkedin.com/in/...',
+      linkedin: 'https://www.linkedin.com/in/motahare-vatandoust/',
     },
   },
   {
     name: 'Amirhossein Izadjoo',
-    role: 'Software Engineer',
-    bio: 'Delivers reliable product features across the stack, with a focus on clean architecture and maintainable code.',
-    initials: 'AI',
+    role: 'Backend, Product & DevOps',
+    bio: 'Owns backend systems, product direction, and DevOps — from architecture and delivery to reliable infrastructure.',
+    image: '/assets/images/izad.jpg',
     links: {
-      // github: 'https://github.com/...',
-      // linkedin: 'https://linkedin.com/in/...',
+      linkedin: 'https://www.linkedin.com/in/amirhosein-izadjou-8526a81a4/',
     },
   },
   {
     name: 'Soheyl Sayyah',
-    role: 'Software Engineer',
-    bio: 'Turns product requirements into shipping software — thoughtful UX, solid engineering, and practical delivery.',
-    initials: 'SS',
+    role: 'Backend Engineer',
+    bio: 'Focuses on backend systems — APIs, data, and the server-side foundation that keeps products reliable.',
+    image: '/assets/images/soheyl.jpg',
     links: {
-      // github: 'https://github.com/...',
-      // linkedin: 'https://linkedin.com/in/...',
+      linkedin: 'https://www.linkedin.com/in/soheylsayyah/',
     },
   },
 ]
@@ -88,13 +85,15 @@ export function TeamSection() {
           {members.map((member, i) => (
             <ScrollReveal key={member.name} delay={i * 0.08}>
               <li className="group flex h-full flex-col">
-                <div
-                  className="flex aspect-4/5 max-h-72 items-center justify-center rounded-2xl border border-white/10 bg-linear-to-br from-violet-950/50 via-zinc-900 to-black transition-colors group-hover:border-violet-500/30"
-                  aria-hidden
-                >
-                  <span className="text-4xl font-semibold tracking-tight text-violet-300/80 sm:text-5xl">
-                    {member.initials}
-                  </span>
+                <div className="relative aspect-4/5 max-h-72 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 transition-colors group-hover:border-violet-500/30">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    unoptimized
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
                 </div>
 
                 <div className="mt-5 flex flex-1 flex-col">
