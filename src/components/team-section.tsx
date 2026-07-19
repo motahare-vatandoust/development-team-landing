@@ -61,7 +61,7 @@ const members: TeamMember[] = [
   {
     name: 'Soheyl Sayyah',
     role: 'Backend Engineer & Product Manager',
-    bio: 'Focuses on backend systems and product direction — APIs, data, requirements, and the foundation that keeps products reliable.',
+    bio: 'Works across backend systems and product direction — APIs, data, requirements, and the foundation that keeps products reliable.',
     image: '/assets/images/soheyl.jpg',
     links: {
       linkedin: 'https://www.linkedin.com/in/soheylsayyah/',
