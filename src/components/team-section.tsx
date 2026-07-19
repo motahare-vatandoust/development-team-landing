@@ -32,36 +32,36 @@ function LinkedinIcon({ className }: { className?: string }) {
 /** Edit this list to add or update team members. */
 const members: TeamMember[] = [
   {
-    name: 'Helia Tari',
-    role: 'Software Engineer',
-    bio: 'Builds and ships product interfaces, from design systems to production-ready web apps.',
-    image: '/assets/images/helia.jpg',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/helia-yaghoubpour-tari/',
-    },
-  },
-  {
-    name: 'Moti Vatandoust',
-    role: 'Software Engineer',
-    bio: 'Focuses on full-stack delivery — APIs, data, and reliable systems that scale with the business.',
-    image: '/assets/images/motahare.JPG',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/motahare-vatandoust/',
-    },
-  },
-  {
     name: 'Amirhossein Izadjoo',
-    role: 'Backend, Product & DevOps',
-    bio: 'Owns backend systems, product direction, and DevOps — from architecture and delivery to reliable infrastructure.',
+    role: 'Technical Team Lead & DevOps',
+    bio: 'Leads the technical team and oversees DevOps — from architecture and delivery standards to reliable production infrastructure.',
     image: '/assets/images/izad.jpg',
     links: {
       linkedin: 'https://www.linkedin.com/in/amirhosein-izadjou-8526a81a4/',
     },
   },
   {
+    name: 'Helia Tary',
+    role: 'Frontend & Mobile Engineer',
+    bio: 'Builds frontend and mobile experiences — from UI implementation to cross-platform apps shipped to production.',
+    image: '/assets/images/helia.jpg',
+    links: {
+      linkedin: 'https://www.linkedin.com/in/helia-yaghoubpour-tari/',
+    },
+  },
+  {
+    name: 'Motahare Vatandoust',
+    role: 'Frontend & UI Engineer',
+    bio: 'Focuses on frontend and UI — polished interfaces, design systems, and user-facing web experiences.',
+    image: '/assets/images/motahare.JPG',
+    links: {
+      linkedin: 'https://www.linkedin.com/in/motahare-vatandoust/',
+    },
+  },
+  {
     name: 'Soheyl Sayyah',
-    role: 'Backend Engineer',
-    bio: 'Focuses on backend systems — APIs, data, and the server-side foundation that keeps products reliable.',
+    role: 'Backend Engineer & Product Manager',
+    bio: 'Focuses on backend systems and product direction — APIs, data, requirements, and the foundation that keeps products reliable.',
     image: '/assets/images/soheyl.jpg',
     links: {
       linkedin: 'https://www.linkedin.com/in/soheylsayyah/',
