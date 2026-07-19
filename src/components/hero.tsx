@@ -38,9 +38,9 @@ export function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 sm:mb-4 sm:text-sm"
+            className="mb-3 text-sm font-semibold tracking-wide text-white sm:mb-4 sm:text-base"
           >
-            Developers who ship
+            Velo Studio
           </motion.p>
 
           <motion.h1 className="text-balance text-[1.875rem] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.05]">
@@ -83,8 +83,8 @@ export function Hero() {
             animate="visible"
             className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-300 sm:mt-6 sm:text-base lg:text-lg"
           >
-            We&apos;re a development team that turns ideas into production-ready
-            products — landing pages, web apps, mobile experiences, and
+            We&apos;re Velo Studio — we turn ideas into production-ready
+            products: landing pages, web apps, mobile experiences, and
             everything in between.
           </motion.p>
 

@@ -24,7 +24,7 @@ export function SiteHeader() {
           href="#"
           className="text-sm font-semibold tracking-wide text-neutral-200 sm:text-base"
         >
-          Developing Team
+          Velo Studio
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

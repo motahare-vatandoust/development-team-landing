@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Developing Team — We build websites & apps from zero",
+  title: "Velo Studio — We build websites & apps from zero",
   description:
-    "A development team that designs, builds, and ships websites and mobile apps from the ground up.",
+    "Velo Studio designs, builds, and ships websites and mobile apps from the ground up.",
 };
 
 export default function RootLayout({
