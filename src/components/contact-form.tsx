@@ -1,7 +1,14 @@
 'use client'
 
-import { useId, useState, type FormEvent } from 'react'
-import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from 'react'
+import { ArrowRight, Check, CheckCircle2, ChevronDown, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const CONTACT_EMAIL = 'velostudio24@gmail.com'
@@ -14,12 +21,14 @@ const projectTypes = [
   'Something else',
 ] as const
 
+type ProjectType = (typeof projectTypes)[number]
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export function ContactForm() {
   const formId = useId()
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [projectType, setProjectType] = useState<ProjectType | ''>('')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -29,7 +38,6 @@ export function ContactForm() {
     const data = new FormData(form)
     const name = String(data.get('name') ?? '').trim()
     const email = String(data.get('email') ?? '').trim()
-    const projectType = String(data.get('projectType') ?? '').trim()
     const message = String(data.get('message') ?? '').trim()
 
     if (!name || !email || !message) {
@@ -61,11 +69,11 @@ export function ContactForm() {
         .join('\n')
     )
 
-    // Opens the user's mail client with a prefilled draft — no backend required.
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
 
     window.setTimeout(() => {
       setStatus('sent')
+      setProjectType('')
       form.reset()
     }, 400)
   }
@@ -123,33 +131,11 @@ export function ContactForm() {
         />
       </div>
 
-      <div>
-        <label
-          htmlFor={`${formId}-type`}
-          className="mb-2 block text-sm font-medium text-neutral-300"
-        >
-          Project type
-        </label>
-        <select
-          id={`${formId}-type`}
-          name="projectType"
-          defaultValue=""
-          className={cn(
-            'w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white',
-            'transition-colors placeholder:text-neutral-600',
-            'hover:border-white/20 focus:border-violet-500/40'
-          )}
-        >
-          <option value="" disabled className="bg-zinc-900 text-neutral-400">
-            Select one
-          </option>
-          {projectTypes.map((type) => (
-            <option key={type} value={type} className="bg-zinc-900">
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
+      <ProjectTypeSelect
+        id={`${formId}-type`}
+        value={projectType}
+        onChange={setProjectType}
+      />
 
       <div>
         <label
@@ -186,24 +172,175 @@ export function ContactForm() {
           type="submit"
           disabled={status === 'sending'}
           className={cn(
-            'inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black',
-            'transition-colors hover:bg-neutral-200 disabled:opacity-60'
+            'inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-black',
+            'transition-colors hover:bg-neutral-200 disabled:opacity-60 sm:self-auto'
           )}
         >
           {status === 'sending' ? (
             <>
-              <Loader2 className="size-4 animate-spin" aria-hidden />
+              <Loader2 className="size-3 animate-spin" aria-hidden />
               Opening…
             </>
           ) : (
             <>
               Send message
-              <ArrowRight className="size-4" aria-hidden />
+              <ArrowRight className="size-3" aria-hidden />
             </>
           )}
         </button>
       </div>
     </form>
+  )
+}
+
+function ProjectTypeSelect({
+  id,
+  value,
+  onChange,
+}: {
+  id: string
+  value: ProjectType | ''
+  onChange: (value: ProjectType | '') => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [highlight, setHighlight] = useState(0)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const listId = `${id}-listbox`
+
+  useEffect(() => {
+    if (!open) return
+
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', onPointerDown)
+    return () => document.removeEventListener('mousedown', onPointerDown)
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const index = value ? projectTypes.indexOf(value) : 0
+    setHighlight(index >= 0 ? index : 0)
+  }, [open, value])
+
+  function select(option: ProjectType) {
+    onChange(option)
+    setOpen(false)
+  }
+
+  function onTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      setOpen(true)
+    }
+  }
+
+  function onListKeyDown(event: KeyboardEvent<HTMLUListElement>) {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      setOpen(false)
+      return
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setHighlight((i) => (i + 1) % projectTypes.length)
+      return
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setHighlight((i) => (i - 1 + projectTypes.length) % projectTypes.length)
+      return
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      select(projectTypes[highlight])
+      return
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault()
+      setHighlight(0)
+      return
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault()
+      setHighlight(projectTypes.length - 1)
+    }
+  }
+
+  return (
+    <div ref={rootRef} className="relative">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-neutral-300">
+        Project type
+      </label>
+
+      <button
+        id={id}
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={onTriggerKeyDown}
+        className={cn(
+          'flex w-full items-center justify-between gap-3 rounded-xl border bg-white/5 px-4 py-3 text-left text-sm transition-colors',
+          open ? 'border-violet-500/40' : 'border-white/10 hover:border-white/20',
+          value ? 'text-white' : 'text-neutral-600'
+        )}
+      >
+        <span className="truncate">{value || 'Select one'}</span>
+        <ChevronDown
+          className={cn(
+            'size-4 shrink-0 text-neutral-400 transition-transform duration-200',
+            open && 'rotate-180'
+          )}
+          aria-hidden
+        />
+      </button>
+
+      {open && (
+        <ul
+          id={listId}
+          role="listbox"
+          tabIndex={-1}
+          aria-labelledby={id}
+          aria-activedescendant={`${listId}-option-${highlight}`}
+          onKeyDown={onListKeyDown}
+          ref={(node) => node?.focus()}
+          className="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-xl border border-white/10 bg-zinc-950/95 p-1.5 shadow-xl shadow-black/40 backdrop-blur-md"
+        >
+          {projectTypes.map((option, index) => {
+            const selected = value === option
+            const active = highlight === index
+            return (
+              <li
+                key={option}
+                id={`${listId}-option-${index}`}
+                role="option"
+                aria-selected={selected}
+                onMouseEnter={() => setHighlight(index)}
+                onClick={() => select(option)}
+                className={cn(
+                  'flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
+                  active ? 'bg-white/10 text-white' : 'text-neutral-300',
+                  selected && 'text-white'
+                )}
+              >
+                <span>{option}</span>
+                {selected && <Check className="size-3.5 shrink-0 text-violet-400" aria-hidden />}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </div>
   )
 }
 
